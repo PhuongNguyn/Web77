@@ -4,7 +4,7 @@
 - Dependencies => su dung ca trong moi truong production 
 
 
-## Restful API 
+## Restful API (1 tiêu chuẩn trong thiết kế API)
 
 - Get: Lấy dữ liệu trả lên cho phía client 
 - Post: Tạo mới.
@@ -16,7 +16,6 @@
 
 - Giúp nhận diện được trạng thái của request (Thành công, thất bại, chuyển hướng,...)
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-
 
 ## Body, query, params 
 
