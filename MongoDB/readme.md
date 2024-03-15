@@ -27,3 +27,5 @@
 
 -https://mongoosejs.com/docs/guide.html
 -https://mongoosejs.com/docs/queries.html (Quries)
+
+- Tạo hàm phân trang cho phần product
