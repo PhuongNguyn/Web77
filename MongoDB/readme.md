@@ -20,6 +20,12 @@
 - sau khi nhận được số trang (pageIndex) và số phần tử trên 1 trang (pageSize) mà người dùng truyền về, chúng ta dùng hàm find().skip(pageSize * pageIndex - pageSize).limit(pageSize).
 - Tính total page bằng cách lấy tất cả số lượng phần tử thông qua hàm countDocuments() => sau đó chia cho pageSize và lấy giá trị trần bằng hàm Math.ceil(countDocument / pageSize)
 
+## Joi
+
+- documentation: https://joi.dev/api/?v=17.12.2
+- How to Custom error message: https://stackoverflow.com/questions/48720942/node-js-joi-how-to-display-a-custom-error-messages
+- Key of error message: https://joi.dev/api/?v=17.12.2#list-of-errors
+
 
 ## Bài tập 
 
@@ -29,3 +35,5 @@
 -https://mongoosejs.com/docs/queries.html (Quries)
 
 - Tạo hàm phân trang cho phần product
+
+- Tạo schema joi để validate dữ liệu cho các hàm => 1. Edit user, 2. Change password, 3. Sign up
