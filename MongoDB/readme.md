@@ -27,6 +27,14 @@
 - Key of error message: https://joi.dev/api/?v=17.12.2#list-of-errors
 
 
+## Authentication 
+
+- Sử dụng jsonwebtoken
+- Khi người dùng đăng nhập vào chúng ta sẽ tạo ra 1 token với thư viện jsonwebtoken và trả về cho phía người dùng -> người dùng phải lưu token này lại để sử dụng cho các chức năng cần phải đăng nhập
+- Token khi gửi đến backend sẽ có dạng Bearer token (Ví dụ Bearer ạksdhjahsdkjaghsjkdhashdkja)
+- Chúng ta sẽ viết 1 middleware đặt tên là authentication để validate người dùng đã đăng nhập hay chưa
+
+
 ## Bài tập 
 
 - Tạo model => product gồm có product_name (string), product_price (Number) => Thêm router và hàm tạo mới product
@@ -37,3 +45,7 @@
 - Tạo hàm phân trang cho phần product
 
 - Tạo schema joi để validate dữ liệu cho các hàm => 1. Edit user, 2. Change password, 3. Sign up
+
+- Thêm authentication cho các hàm ví dụ (Tạo sản phẩm, sửa sản phẩm)
+
+- Ở hàm delete user => check xem user đã tồn tại hay chưa trước khi delete => Nếu user không tồn tại thì trả về người dùng không tồn tại

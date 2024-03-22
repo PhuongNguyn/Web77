@@ -1,8 +1,12 @@
 import User from "../models/user.js"
 import bcrypt from "bcryptjs"
 import joi from "joi"
+import jwt from "jsonwebtoken"
+
+const tokenSecret = "jwtweb77"
 
 export const login = async (req, res) => {
+    console.log(process.env)
     const { compareSync } = bcrypt
     try {
         const email = req.body.email
@@ -31,6 +35,7 @@ export const login = async (req, res) => {
         }
 
         const checkPassword = compareSync(password, findUser.password)
+        const accessToken = jwt.sign({ id: findUser._id, }, process.env.SCRET_KEY, { expiresIn: '1d' })
 
         // Tách findUser thành 2 phần => phần thứ 1 password , phần thứ 2 là phần còn lại của findUser gán vào biến returnUser
         const {
@@ -46,7 +51,8 @@ export const login = async (req, res) => {
 
         return res.status(200).json({
             message: "Đăng nhập thành công",
-            user: returnUser
+            user: returnUser,
+            accessToken
         })
     } catch (error) {
         return res.status(500).json(error)
@@ -193,6 +199,20 @@ export const changePassword = async (req, res) => {
         })
     } catch (error) {
         console.log(error)
+        return res.status(500).json(error)
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id
+
+        // check xem người dùng có tồn tại hay không trước khi xoá
+
+        await User.deleteOne({ _id: id })
+
+        return res.status(200).json({ message: "Xoá người dùng thành công" })
+    } catch (error) {
         return res.status(500).json(error)
     }
 }
