@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken"
 const tokenSecret = "jwtweb77"
 
 export const login = async (req, res) => {
-    console.log(process.env)
     const { compareSync } = bcrypt
     try {
         const email = req.body.email
@@ -65,6 +64,7 @@ export const signUp = async (req, res) => {
         const name = req.body.name
         const email = req.body.email
         const password = req.body.password
+        const role = req.body.role
 
         if (!name) {
             return res.status(400).json({
@@ -101,7 +101,8 @@ export const signUp = async (req, res) => {
         const user = await User.create({
             email,
             password: hashPassword,
-            name
+            name,
+            role
         })
 
         return res.status(200).json({

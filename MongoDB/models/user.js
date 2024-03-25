@@ -18,6 +18,29 @@ const User = new mongoose.Schema({
         required: true,
         default: "customer"
     },
+    workExperience: [
+        {
+            workName: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String,
+                required: true,
+            },
+            startDate: {
+                type: Date,
+                required: true
+            },
+            endDate: {
+                type: Date,
+                required: true
+            }
+        }
+    ],
+    hobby: {
+        type: String,
+    }
 }, {
     timestamps: true,
 })

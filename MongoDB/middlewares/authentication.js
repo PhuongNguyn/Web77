@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
+import user from "../models/user.js"
 
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
     try {
         const bearerToken = req.headers.authorization
 
@@ -15,8 +16,19 @@ const authentication = (req, res, next) => {
             return res.status(401).json({ message: "Ban chua dang nhap" })
         }
 
+        const userId = verify.id
+
+        const findUser = await user.findById(userId)
+
+        if (!findUser) {
+            return res.status(404).json({ message: "User không tồn tại" })
+        }
+
+        req.user = findUser
+
         next()
     } catch (error) {
+        console.log(error)
         return res.status(401).json({ message: "Ban chua dang nhap" })
     }
 }

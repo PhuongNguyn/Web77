@@ -8,6 +8,10 @@ const Product = new mongoose.Schema({
     product_price: {
         type: Number,
         required: true
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: "users"
     }
 }, {
     timestamps: true
