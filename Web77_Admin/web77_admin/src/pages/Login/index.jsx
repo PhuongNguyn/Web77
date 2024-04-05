@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { login } from '../../services/user';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom'
+import { saveTokenToLocalstorage, saveUserToLocalstorage } from '../../utils/localstorge';
+import { useDispatch, useSelector } from 'react-redux';
+import { login as loginAction } from "../../features/user/userSlice"
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.users.user)
     const onFinish = async (values) => {
         try {
             setLoading(true)
             const result = await login(values)
+            dispatch(loginAction({ user: result.data.user }))
+            saveTokenToLocalstorage(result.data.accessToken)
+            saveUserToLocalstorage(result.data.user)
             toast.success("Đăng nhập thành công")
         } catch (error) {
             console.log(error)
@@ -62,14 +71,14 @@ const Login = () => {
                 >
                     <Input.Password />
                 </Form.Item>
-
+                <div className='flex justify-end'><Link to={'/sign-up'} className=''>Chưa có tài khoản? Đăng ký</Link></div>
                 <Form.Item
                     wrapperCol={{
                         offset: 8,
                         span: 16,
                     }}
                 >
-                    <Button loading={loading} type="primary" htmlType="submit">
+                    <Button className='mt-2' loading={loading} type="primary" htmlType="submit">
                         <p className='text-[white]'>Submit</p>
                     </Button>
                 </Form.Item>
