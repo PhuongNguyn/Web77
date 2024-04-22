@@ -2,6 +2,7 @@ import User from "../models/user.js"
 import bcrypt from "bcryptjs"
 import joi from "joi"
 import jwt from "jsonwebtoken"
+import handleUpload from "../utils/cloudinary.js"
 
 const tokenSecret = "jwtweb77"
 
@@ -131,10 +132,10 @@ export const createUser = async (req, res) => {
 export const getPagingUser = async (req, res) => {
     try {
         const query = req.query
-        const users = await User.find().skip(query.pageSize * query.pageIndex - query.pageSize).limit(query.pageSize)
+        const users = await User.find().skip(query.pageSize * query.pageIndex - query.pageSize).limit(query.pageSize).sort({ createdAt: "desc" })
         const countUsers = await User.countDocuments()
         const totalPage = Math.ceil(countUsers / query.pageSize) // Lấy giá trị trần   
-        return res.status(200).json({ users, totalPage })
+        return res.status(200).json({ users, totalPage, count: countUsers })
     } catch (error) {
         return res.status(500).json(error)
     }
@@ -214,6 +215,37 @@ export const deleteUser = async (req, res) => {
 
         return res.status(200).json({ message: "Xoá người dùng thành công" })
     } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
+export const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.id
+
+        const user = await User.findById(userId)
+
+        return res.status(200).json({ user })
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
+export const uploadUserAvatar = async (req, res) => {
+    try {
+        const b64 = Buffer.from(req.file.buffer).toString("base64");
+        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+        const result = await handleUpload(dataURI)
+        const userId = req.body.userId
+        const updateUser = await User.findByIdAndUpdate(userId, {
+            avatar: result.url
+        })
+
+        return res.status(200).json({
+            url: result.url
+        })
+    } catch (error) {
+        console.log(error)
         return res.status(500).json(error)
     }
 }

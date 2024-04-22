@@ -8,8 +8,8 @@ const app = express()
 dotenv.config()
 app.use(express.json())
 app.use(cors({
-    // origin: ["http://localhost:5173", "http://localhost:3002"],
-    origin: "*"
+    origin: ["https://web77-1.onrender.com", "http://localhost:5173"],
+    // origin: "*"
 }))
 app.use(router)
 
